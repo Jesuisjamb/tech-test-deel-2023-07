@@ -10,3 +10,13 @@ describe('GET jobs/unpaid', () => {
         .expect(200)
     })
 });
+
+describe('POST jobs/:job_id/pay', () => {
+    it('It should return a confirmation object', async () => {
+        await request(app)
+        .post('/jobs/5/pay')
+        .set('Accept', 'application/json')
+        .set({'profile_id': '4'})
+        .expect(200)
+    })
+});

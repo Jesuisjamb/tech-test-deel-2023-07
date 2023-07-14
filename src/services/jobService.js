@@ -1,4 +1,4 @@
-const { Op } = require('sequelize')
+const {Op, literal} = require('sequelize')
 
 const findAllUnpaid = async (params) =>{
     const {model, profileId, profileType} = params
@@ -56,7 +56,7 @@ const handlePayable = async (params) =>{
                  * Transactions
                  */
                 await Profile.update({ balance: newClientBalance }, {where : { id: profileId }})
-                await Profile.update({ balance: sequelize.literal(`balance + ${jobPrice}`)}, {where : { id: contractorId }})
+                await Profile.update({ balance: literal(`balance + ${jobPrice}`)}, {where : { id: contractorId }})
                 await Job.update({ paid: 1, paymentDate: date.toISOString() }, {where : { id: jobId }})
                 return {'msg':'Payment sent'}
             }
